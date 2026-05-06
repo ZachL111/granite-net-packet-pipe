@@ -1,0 +1,32 @@
+{
+  "index": 122,
+  "phase": 2,
+  "batch": 14,
+  "name": "granite-net-packet-pipe",
+  "planned_name": "granite-net-packet-pipe",
+  "language": "TypeScript",
+  "category": "Networking",
+  "goal": "Design a TypeScript verification harness for packet systems, covering stream reduction, windowed input fixtures, and failure-oriented tests.",
+  "repository_url": "https://github.com/ZachL111/granite-net-packet-pipe",
+  "verification_command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1",
+  "model": {
+    "inputs": [
+      "demand",
+      "capacity",
+      "latency",
+      "risk",
+      "weight"
+    ],
+    "threshold": 179,
+    "risk_penalty": 7,
+    "latency_penalty": 3,
+    "weight_bonus": 5,
+    "decision_rule": "accept when score is greater than or equal to threshold, otherwise review"
+  },
+  "quality_gates": [
+    "readme constraint scan",
+    "fixture presence check",
+    "metadata JSON parse",
+    "language verifier"
+  ]
+}
