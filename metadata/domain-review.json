@@ -1,0 +1,73 @@
+{
+  "repo": "granite-net-packet-pipe",
+  "language": "TypeScript",
+  "category": "Networking",
+  "goal": "Design a TypeScript verification harness for packet systems, covering stream reduction, windowed input fixtures, and failure-oriented tests.",
+  "review_model": {
+    "terms": [
+      "packet span",
+      "retry pressure",
+      "route drift",
+      "socket risk"
+    ],
+    "lanes": [
+      "ship",
+      "watch",
+      "hold"
+    ],
+    "score": "signal * 2 + slack + confidence - drag * 3",
+    "purpose": "surface the domain-specific cases that need the most careful review"
+  },
+  "cases": [
+    {
+      "name": "baseline",
+      "focus": "packet span",
+      "signal": 67,
+      "slack": 28,
+      "drag": 18,
+      "confidence": 51,
+      "score": 159,
+      "lane": "ship"
+    },
+    {
+      "name": "stress",
+      "focus": "retry pressure",
+      "signal": 51,
+      "slack": 38,
+      "drag": 20,
+      "confidence": 71,
+      "score": 151,
+      "lane": "ship"
+    },
+    {
+      "name": "edge",
+      "focus": "route drift",
+      "signal": 47,
+      "slack": 40,
+      "drag": 14,
+      "confidence": 76,
+      "score": 168,
+      "lane": "ship"
+    },
+    {
+      "name": "recovery",
+      "focus": "socket risk",
+      "signal": 85,
+      "slack": 38,
+      "drag": 16,
+      "confidence": 65,
+      "score": 225,
+      "lane": "ship"
+    },
+    {
+      "name": "stale",
+      "focus": "packet span",
+      "signal": 61,
+      "slack": 49,
+      "drag": 27,
+      "confidence": 62,
+      "score": 152,
+      "lane": "ship"
+    }
+  ]
+}

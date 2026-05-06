@@ -1,69 +1,40 @@
 # granite-net-packet-pipe
 
-`granite-net-packet-pipe` is a focused TypeScript codebase around design a TypeScript verification harness for packet systems, covering stream reduction, windowed input fixtures, and failure-oriented tests. It is meant to be easy to inspect, run, and extend without a hosted service.
-
-## Granite Net Packet Pipe Walkthrough
-
-I would read the project from the outside in: command, fixture, model, then roadmap. That keeps the networking idea grounded in files that can be checked locally.
-
-## Capabilities
-
-- Includes extended examples for retry behavior, including `surge` and `degraded`.
-- Documents policy decisions tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
-- Stores project constants and verification metadata in `metadata/project.json`.
-- Adds a repository audit script that checks structure before running the language verifier.
+`granite-net-packet-pipe` explores networking with a small TypeScript codebase and local fixtures. The technical goal is to design a TypeScript verification harness for packet systems, covering stream reduction, windowed input fixtures, and failure-oriented tests.
 
 ## Reason For The Project
 
-The goal is to capture the core behavior in code and make the surrounding assumptions obvious. A reader should be able to run the verifier, open the fixtures, and understand why each decision was made.
+This is intentionally local and self-contained so it can be inspected without credentials, services, or seeded history.
 
-## Where Things Live
+## Granite Net Packet Pipe Review Notes
 
-- `src`: primary implementation
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
-- `package.json`: Node package scripts
+The first comparison I would make is `socket risk` against `retry pressure` because it shows where the rule is most opinionated.
+
+## What It Does
+
+- `fixtures/domain_review.csv` adds cases for packet span and retry pressure.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/granite-net-packet-walkthrough.md` walks through the case spread.
+- The TypeScript code includes a review path for `socket risk` and `retry pressure`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
 ## How It Is Put Together
 
-The core is a scoring model over demand, capacity, latency, risk, and weight. That keeps packet shape, socket state, and retry behavior in one explicit decision path. The threshold is 179, with risk penalty 7, latency penalty 3, and weight bonus 5. The TypeScript project keeps types close to the model and compiles before running its checks.
+The core code exposes a scoring path and the added review layer uses `signal`, `slack`, `drag`, and `confidence`. The domain terms are `packet span`, `retry pressure`, `route drift`, and `socket risk`.
 
-## Command Examples
+The TypeScript implementation avoids hidden state so fixture changes are easy to reason about.
+
+## Run It
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Check It
 
-## Data Notes
+The verifier is intentionally local. It should fail if the fixture score math, lane assignment, or language-specific test drifts.
 
-`surge` is the first example I would inspect because it lands on the `accept` path with a score of 190. The broader file also keeps `degraded` at -57 and `surge` at 190, which gives the model a useful low-to-high spread.
+## Boundaries
 
-## Check The Work
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
-
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Tradeoffs
-
-This code is local-first. It makes no claim about deployed usage and avoids credentials, hosted state, and environment-specific setup.
-
-## Possible Extensions
-
-- Split the scoring constants into a typed configuration object and validate it before use.
-- Add a comparison mode that shows how decisions change when one signal is adjusted.
-- Add a loader for `examples/extended_cases.csv` and promote selected cases into the language test suite.
-- Add one more networking fixture that focuses on a malformed or borderline input.
-
-## Getting It Running
-
-Clone the repository, enter the directory, and run the verifier. No database server, cloud account, or token is required.
+The fixture set is small enough to audit by hand. The next useful expansion is malformed input coverage, not extra surface area.
